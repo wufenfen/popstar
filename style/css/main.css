@@ -1,0 +1,17 @@
+
+html {
+	height:100%;
+	overflow:hidden;
+}
+
+body {
+	margin:0px;
+	padding:0px;
+	height:100%;
+}
+
+.canvas {
+	margin: 0 auto;
+    width: 500px;
+    height: 800px;
+}
