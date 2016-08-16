@@ -43,7 +43,7 @@ dataObj.prototype.draw = function(){
 	 	}
 		context.fillStyle = "rgba(255,255,255," + this.alpha + ")";
 		context.font = "30px 微软雅黑";
-		context.fillText("奖励: " + this.bonus, canWidth*0.3, canHeight*0.5);
+		context.fillText("奖励: " + this.bonus, canWidth*0.3, canHeight*0.45);
 	}
 
 	if(this.pass){
@@ -54,7 +54,7 @@ dataObj.prototype.draw = function(){
 		context.fillText("第" + this.level + '关, 目标: ' + this.level*3000, this.right, canHeight*0.5);
 	}
 
-	if (this.gameOver) {
+	if (this.gameOver) { 
 		if( this.alpha< 1){
 	 		this.alpha += 0.01;
 	 	}
