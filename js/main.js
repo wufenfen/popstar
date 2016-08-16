@@ -4,9 +4,12 @@ var canvas;
 var context;
 var canWidth,canHeight;
 var star;
-var mx,my;
-var chessboard, chessObj, colNum; //calculate the chess change
-var data;
+var mx,my; // the position of mouse when click
+var chessboard, chess;
+var colNum; // the valid column number 
+var dropData; //record the stars which will be drop 
+var data; //record the data in the game
+var resetBtn;
 
 function playGame(){
 	init();	
@@ -21,6 +24,8 @@ function init(){
 	canvas = document.getElementById('popstar');
 	context = canvas.getContext('2d');
 	canvas.addEventListener('click',onMouseClick);
+	resetBtn = document.getElementById('reset');
+	dropData = []; 
 
 	data = new dataObj(); 
 
@@ -29,8 +34,10 @@ function init(){
 
 	star = new starObj();
 	star.init();
-
-
+	
+	resetBtn.onclick = function(){
+		chess.init();
+	}
 }
 
 
@@ -43,11 +50,13 @@ function gameLoop(){
 
 
 function onMouseClick(e){
-	mx = e.offsetX;
-	my = e.offsetY;
-	var popX = Math.floor((mx)/50);
-	var popY = Math.floor((canHeight-85-my)/50);
-	chess.click(popX, popY);
+	if(!data.gameOver){
+		mx = e.offsetX;
+		my = e.offsetY;
+		var popX = Math.floor((mx)/50);
+		var popY = Math.floor((canHeight-85-my)/50);
+		chess.click(popX, popY);
+	} 
 }
 
  
