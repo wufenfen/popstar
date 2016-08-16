@@ -34,9 +34,10 @@ function init(){
 
 	star = new starObj();
 	star.init();
-	
+
 	resetBtn.onclick = function(){
 		chess.init();
+	 	data = new dataObj(); 
 	}
 }
 

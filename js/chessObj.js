@@ -30,17 +30,17 @@ chessObj.prototype.click = function(x, y){
 	}
 	
 	this.update(); 
-	isGameOver();
+	this.isGameOver();
 }
 
-function isGameOver(){
+chessObj.prototype.isGameOver = function(){
 	var disappearSet;
 	var count=0; //the rest star, the less, the more bonus
 	for(var i=0; i<colNum; i++){ 
 		for(j=0; j<10; j++) {
 			disappearSet = []; 
-			count++;
 			if (isValid(i, j)) {
+				count++;
 				popStar(disappearSet, [], [], i, j, chessboard[i][j]);
 				if(disappearSet.length>1){
 					data.gameOver = false;
@@ -50,16 +50,17 @@ function isGameOver(){
 		}
 	}
 	if(count<10){
+		data.getBonus = true;
 		data.bonus = data.bonusData[count];
 		data.totalScore += data.bonus;
 	}
 	if(data.totalScore - data.lastScore >= 3000){
 		data.pass = true; //pass this level to the next level
-		data.level++;
+		data.level++; 
 		setTimeout(function(){
-			this.init();
+			chess.init();
 			data.reset();
-		},5000);
+		},4000);
 	}
 	else{
 		data.gameOver = true;  // game over
