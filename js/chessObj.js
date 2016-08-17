@@ -19,16 +19,33 @@ chessObj.prototype.click = function(x, y){
 	var disabledSet = []; //record position which has been tracked
 	var starNo = chessboard[x][y]; 
 	popStar(disappearSet, [], disabledSet, x, y, starNo);
-	//console.log(disappearSet.length);
-	if(disappearSet.length>1){ //at least two stars 
+	var popStarNumber = disappearSet.length;
+	if(popStarNumber>1){ //at least two stars 
 		data.update( disappearSet.length );
 		disappearSet.forEach(function(item){
 			var sx = item[0];
 			var sy = item[1];
 			chessboard[sx][sy] = -1;
 		})
+	} 
+	// show the encourage tips
+	if(popStarNumber>30){
+		data.popEncourType = 4;
 	}
-	
+	else if(popStarNumber>25){
+		data.popEncourType = 3;
+	}
+	else if(popStarNumber>20){
+		data.popEncourType = 2;
+
+	}
+	else if(popStarNumber>15){
+		data.popEncourType = 1;
+	}
+	else if(popStarNumber>8){
+		data.popEncourType = 0;
+	}
+
 	this.update(); 
 	this.isGameOver();
 }
@@ -50,6 +67,7 @@ chessObj.prototype.isGameOver = function(){
 		}
 	}
 	if(count<10){
+		data.leftStar = count;
 		data.getBonus = true;
 		data.bonus = data.bonusData[count];
 		data.totalScore += data.bonus;
@@ -63,8 +81,7 @@ chessObj.prototype.isGameOver = function(){
 		},4000);
 	}
 	else{
-		data.gameOver = true;  // game over
-		resetBtn.style.display = 'inline-block';
+		data.gameOver = true;  // game over 
 	}
 }
 

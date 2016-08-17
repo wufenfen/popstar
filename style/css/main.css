@@ -24,7 +24,6 @@ body {
  	font-weight: bold;
  	padding: 10px;
  	border-radius: 4px;
- 	border:2px solid white;
- 	display: none;
+ 	border:2px solid white; 
  	cursor: pointer;
  }
