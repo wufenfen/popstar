@@ -48,4 +48,5 @@ starObj.prototype.draw = function(){
 			}
 		}
 	}  
+
 }

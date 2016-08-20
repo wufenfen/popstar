@@ -50,7 +50,7 @@ chessObj.prototype.click = function(x, y){
 	}
 
 	this.update(); 
-	this.isGameOver();
+	setTimeout(this.isGameOver,500);
 }
 
 chessObj.prototype.isGameOver = function(){
@@ -125,15 +125,20 @@ chessObj.prototype.update = function(){
 		} 
 	} 
 
-	var temp = [];	
-	for(i=0; i<colNum; i++){
-		//if the colomn is empty, merge 
-		if( !isEmpty(chessboard[i]) ){
-			temp.push(chessboard[i]);
-		}
-	} 
-	chessboard = temp;
-	colNum = temp.length; 
+	setTimeout(function(){
+		return (function(){
+			var temp = [];	
+			for(i=0; i<colNum; i++){
+				//if the colomn is empty, merge 
+				if( !isEmpty(chessboard[i]) ){
+					temp.push(chessboard[i]);
+				}
+			} 
+			chessboard = temp;
+			colNum = temp.length; 
+		})()
+	},50);
+	
 }
 
 function popStar(disappearSet, p, disabledSet, x, y, starNo){
