@@ -15,6 +15,9 @@ chessObj.prototype.click = function(x, y){
 	if( !isValid(x, y) ){
 		return;
 	}
+ 
+	playSound('broken.mp3');
+
 	var disappearSet = [];
 	var disabledSet = []; //record position which has been tracked
 	var starNo = chessboard[x][y]; 
@@ -29,6 +32,9 @@ chessObj.prototype.click = function(x, y){
 		})
 	} 
 	// show the encourage tips
+	if(popStarNumber>=8){
+		playSound('fire.mp3');
+	}
 	if(popStarNumber>30){
 		data.popEncourType = 4;
 	}
@@ -42,7 +48,7 @@ chessObj.prototype.click = function(x, y){
 	else if(popStarNumber>15){
 		data.popEncourType = 1;
 	}
-	else if(popStarNumber>8){
+	else if(popStarNumber>=8){
 		data.popEncourType = 0;
 	}
 
@@ -51,6 +57,10 @@ chessObj.prototype.click = function(x, y){
 }
 
 chessObj.prototype.isGameOver = function(){
+	if( !data.clearStage && data.totalScore >= data.targetScore){
+		data.clearStage = true;
+		playSound('stageclear.mp3');
+	}
 	var disappearSet;
 	var count=0; //the rest star, the less, the more bonus
 	for(var i=0; i<colNum; i++){ 
@@ -69,19 +79,22 @@ chessObj.prototype.isGameOver = function(){
 	if(count<10){
 		data.leftStar = count;
 		data.getBonus = true;
-		data.bonus = data.bonusData[count];
+		data.bonus = 2000-count*count*20;
 		data.totalScore += data.bonus;
 	}
-	if(data.totalScore - data.lastScore >= 3000){
+	if( data.clearStage ){
+		playSound('win.mp3');
 		data.pass = true; //pass this level to the next level
 		data.level++; 
-		setTimeout(function(){
+		data.targetScore = 1000*(data.level+1)*data.level/2;
+		setTimeout(function(){ 
 			chess.init();
 			data.reset();
 		},4000);
 	}
 	else{
-		data.gameOver = true;  // game over 
+		data.gameOver = true;  // game over  
+		playSound('gameover.mp3');
 	}
 }
 

@@ -10,6 +10,7 @@ var colNum; // the valid column number
 var dropData; //record the stars which will be drop 
 var data; //record the data in the game
 var resetBtn;
+var audio;
 
 function playGame(){
 	init();	
@@ -25,8 +26,9 @@ function init(){
 	context = canvas.getContext('2d');
 	canvas.addEventListener('click',onMouseClick);
 	resetBtn = document.getElementById('reset');
-	dropData = []; 
+	audio = document.createElement('audio');
 
+	dropData = []; 
 	data = new dataObj(); 
 
 	chess = new chessObj();
@@ -36,6 +38,7 @@ function init(){
 	star.init();
 
 	resetBtn.onclick = function(){
+		playSound('restart.mp3');
 		chess.init();
 	 	data = new dataObj(); 
 	}
@@ -60,4 +63,36 @@ function onMouseClick(e){
 	} 
 }
 
- 
+ function playSound(src){
+ 	audio.pause();
+	audio.src = 'style/sound/' + src;
+	setTimeout(function () {      
+	   audio.play();
+	}, 150);
+ }
+
+
+function controlVol(type){
+	if(type == 'up'){
+		var volume = audio.volume  + 0.1;
+		if(volume >=1 ){
+			volume = 1 ;
+		}
+		audio.volume =  volume;
+	}else if(type == 'down'){
+		var volume = audio.volume  - 0.1;
+		if(volume <=0 ){
+			volume = 0 ;
+		}
+		audio.volume =  volume;
+	}
+	document.getElementById('nowVol').innerHTML = 'Vol:' + returnFloat1(audio.volume);
+}
+
+function returnFloat1(value) {    
+	value = Math.round(parseFloat(value) * 10) / 10;
+	if (value.toString().indexOf(".") < 0){
+		value = value.toString() + ".0";
+	}
+	return value;
+}

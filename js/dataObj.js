@@ -1,11 +1,12 @@
  var dataObj = function() {
      this.level = 1;
      this.totalScore = 0;
-     this.lastScore = 0; // the score get in the last level
+     this.targetScore = 1000;
      this.bonus = 0;
      this.popNum = 0; //the number of the stars that pop each time
      this.score = 0; // the score gained each time
      this.gameOver = false;
+     this.clearStage = false; //if the score greater than the target score
      this.leftStar = 0; //the stars that left in each level 
      this.getBonus = false; // if get bonus in each level
      this.pass = false; // if pass this level
@@ -15,7 +16,6 @@
      this.popEncourType = -1;
      this.increase = true;
      this.popEncourage = ['棒棒哒！', '帅呆了！', '不可思议！', '屌炸天了!', '你是地球来的吗？'];
-     this.bonusData = [2000, 1980, 1920, 1820, 1680, 1500, 1280, 1020, 720, 380, 0];
  }
 
  dataObj.prototype.update = function(popNum) {
@@ -27,6 +27,7 @@
  dataObj.prototype.reset = function() {
      this.leftStar = 0;
      this.getBonus = false;
+     this.clearStage = false;  
      this.pass = false;
      this.alpha = 0;
      this.right = canWidth;
@@ -39,11 +40,14 @@
      context.fillStyle = 'white';
      context.font = "20px 微软雅黑";
      context.fillText("第 " + this.level + '关', 20, 30);
-     context.font = "30px 微软雅黑";
-     context.fillText("目标: " + this.level * 3000, canWidth * 0.35, 40);
+     context.font = "25px 微软雅黑";
+     drawUI1(canWidth * 0.32, 10, 170, 45);
+     context.fillText("目标: " + this.targetScore, canWidth * 0.35, 40);
+     drawUI1(canWidth * 0.32, 55, 170, 45);
      context.fillText("得分: " + this.totalScore, canWidth * 0.35, 85);
+     drawUI2(canWidth * 0.3, 105, 200, 38);
      context.font = "20px 微软雅黑";
-     context.fillText('消除' + this.popNum + "个: 得" + this.score + "分", canWidth * 0.35, 120);
+     context.fillText('消除' + this.popNum + "个: " + this.score, canWidth * 0.35, 130);
 
      if (this.popEncourType !== -1) {
          if (this.increase) {
@@ -52,7 +56,7 @@
              } 
              else{ // count for the stay time 
                  this.count++;
-                 if (this.count > 20 || this.count < 1) {
+                 if (this.count > 40 || this.count < 1) {
                      this.increase = false;
                      this.count = 0;
                  }
