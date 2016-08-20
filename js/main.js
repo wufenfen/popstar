@@ -5,7 +5,7 @@ var context;
 var canWidth,canHeight;
 var star;
 var mx,my; // the position of mouse when click
-var chessboard, chess;
+var chessboard,tmpChessboard, chess;
 var colNum; // the valid column number 
 var dropData; //record the stars which will be drop 
 var data; //record the data in the game
@@ -28,7 +28,7 @@ function init(){
 	resetBtn = document.getElementById('reset');
 	audio = document.createElement('audio');
 
-	dropData = []; 
+	dropData = {}; 
 	data = new dataObj(); 
 
 	chess = new chessObj();

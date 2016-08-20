@@ -25,6 +25,8 @@
  }
 
  dataObj.prototype.reset = function() {
+     this.popNum = 0;
+     this.score = 0;
      this.leftStar = 0;
      this.getBonus = false;
      this.clearStage = false;  
@@ -96,7 +98,7 @@
              }
          }
          context.font = "30px 微软雅黑";
-         context.fillText("第" + this.level + '关, 目标: ' + this.level * 3000, this.right, canHeight * 0.5);
+         context.fillText("第" + this.level + '关, 目标: ' + this.targetScore, this.right, canHeight * 0.5);
      }
 
      if (this.gameOver) {

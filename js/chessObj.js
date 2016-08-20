@@ -1,13 +1,12 @@
 var chessObj = function(){
-	chessboard = [];  // 0-9 0-9 from left down 
+	chessboard = [];  // 0-9 0-9 from left down  
 }
 
 chessObj.prototype.init = function(){
 	colNum = 10;
 	for(var i=0; i< colNum; i++){
-		chessboard[i] = mathRandom(10);
+		chessboard[i] = mathRandom(10); 
 	}
-	
 }
 
 //when click the x y, the same type star around will disappear too
@@ -15,15 +14,13 @@ chessObj.prototype.click = function(x, y){
 	if( !isValid(x, y) ){
 		return;
 	}
- 
-	playSound('broken.mp3');
-
 	var disappearSet = [];
 	var disabledSet = []; //record position which has been tracked
 	var starNo = chessboard[x][y]; 
 	popStar(disappearSet, [], disabledSet, x, y, starNo);
 	var popStarNumber = disappearSet.length;
 	if(popStarNumber>1){ //at least two stars 
+		playSound('broken.mp3');
 		data.update( disappearSet.length );
 		disappearSet.forEach(function(item){
 			var sx = item[0];
@@ -57,10 +54,6 @@ chessObj.prototype.click = function(x, y){
 }
 
 chessObj.prototype.isGameOver = function(){
-	if( !data.clearStage && data.totalScore >= data.targetScore){
-		data.clearStage = true;
-		playSound('stageclear.mp3');
-	}
 	var disappearSet;
 	var count=0; //the rest star, the less, the more bonus
 	for(var i=0; i<colNum; i++){ 
@@ -82,11 +75,15 @@ chessObj.prototype.isGameOver = function(){
 		data.bonus = 2000-count*count*20;
 		data.totalScore += data.bonus;
 	}
+	if( !data.clearStage && data.totalScore >= data.targetScore){
+		data.clearStage = true;
+		playSound('stageclear.mp3');
+	}
 	if( data.clearStage ){
 		playSound('win.mp3');
 		data.pass = true; //pass this level to the next level
 		data.level++; 
-		data.targetScore = 1000*(data.level+1)*data.level/2;
+		data.targetScore = 1000 + 3000*(data.level-1);//the target score rule
 		setTimeout(function(){ 
 			chess.init();
 			data.reset();
@@ -98,21 +95,22 @@ chessObj.prototype.isGameOver = function(){
 	}
 }
 
-/*//when some star disappears, the rest reshape.
+//when some star disappears, the rest reshape.
 chessObj.prototype.update = function(){ 
-	
+ 
 	var gap;
 	// for every column
+	dropData = {}; 
 	for(var i=0; i<colNum; i++){ 
-		dropData = []; 
+		//{17:6} means the star drop from (1,7) to (1,6)
 		gap = 0;
 		for(j=0; j<10; j++){
-			if(!chessboard[i][j]){
+			if(chessboard[i][j] == undefined){
 				continue;
 			}
 			// the disappeard star
 			if(chessboard[i][j] == -1){
-				gap++;
+				gap++; 
 			 	// if the next one is still disappear
 				if(j<9 && chessboard[i][j+1] == -1){
 					continue; 
@@ -121,40 +119,13 @@ chessObj.prototype.update = function(){
 			else { //the star need to drop
 				if( gap>0 ){
 					var key = 10*i+j;
-					var tem = {};
-					tem[key] = [i,j-gap,j];
-					dropData.push(tem);
-					console.log(tem);
+					dropData[key] = j-gap;
 				} 
 			} 
 		} 
-	}
-
-	temp = [];	
-	for(i=0; i<colNum; i++){
-		//if the colomn is empty, merge 
-		if( !isEmpty(chessboard[i]) ){
-			temp.push(chessboard[i]);
-		}
 	} 
-	chessboard = temp;
-	colNum = temp.length; 
-}*/
 
-//when some star disappears, the rest reshape.
-chessObj.prototype.update = function(){
-	var temp = [];
-	for(var i=0; i<colNum; i++){
-		temp = []; 
-		for(j=0; j<10; j++) {
-			if( chessboard[i][j] !== undefined && chessboard[i][j] !== -1){
-				temp.push(chessboard[i][j]);
-			}
-		}
-		chessboard[i] = temp;
-	}
-
-	temp = [];	
+	var temp = [];	
 	for(i=0; i<colNum; i++){
 		//if the colomn is empty, merge 
 		if( !isEmpty(chessboard[i]) ){
@@ -166,6 +137,9 @@ chessObj.prototype.update = function(){
 }
 
 function popStar(disappearSet, p, disabledSet, x, y, starNo){
+	if( starNo==-1 ){
+		return;
+	}
 	if(disappearSet.length == 0){
 		disappearSet.push([x,y]);
 	}
@@ -238,7 +212,7 @@ function isValid(x, y){
 
 function isEmpty(arr){
 	for (var i = 0; i < arr.length; i++) {
-		if( arr[i] !== undefined ){
+		if( arr[i] !== undefined &&  arr[i] !==  -1){
 			return false;
 		}
 	}

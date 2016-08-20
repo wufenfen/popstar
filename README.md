@@ -18,4 +18,4 @@ try to make a web pop star game
 
 过关条件
 
-关卡总得分>=目标分数=1000*（level+1）*level/2。
+关卡总得分>=目标分数=1000+(level-1)*3000。
