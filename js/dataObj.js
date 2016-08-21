@@ -7,8 +7,7 @@
      this.score = 0; // the score gained each time
      this.gameOver = false;
      this.clearStage = false; //if the score greater than the target score
-     this.leftStar = 0; //the stars that left in each level 
-     this.getBonus = false; // if get bonus in each level
+     this.leftStar = 0; //the stars that left in each level  
      this.pass = false; // if pass this level
      this.alpha = 0; // for showing
      this.right = canWidth; //for text move from right to left
@@ -27,8 +26,7 @@
  dataObj.prototype.reset = function() {
      this.popNum = 0;
      this.score = 0;
-     this.leftStar = 0;
-     this.getBonus = false;
+     this.leftStar = 0; 
      this.clearStage = false;  
      this.pass = false;
      this.alpha = 0;
@@ -76,7 +74,7 @@
          context.fillText(this.popEncourage[this.popEncourType], canWidth * 0.35, canHeight * 0.3);
      }
 
-     if (this.getBonus) {
+     if (this.pass || this.gameOver) {
          if (this.alpha < 1) {
              this.alpha += 0.01;
          }

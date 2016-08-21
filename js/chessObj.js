@@ -69,11 +69,13 @@ chessObj.prototype.isGameOver = function(){
 			}
 		}
 	}
-	if(count<10){
-		data.leftStar = count;
-		data.getBonus = true;
+	data.leftStar = count;
+	if(count<10){ 
 		data.bonus = 2000-count*count*20;
 		data.totalScore += data.bonus;
+	}
+	else{
+		data.bonus = 0; 
 	}
 	if( !data.clearStage && data.totalScore >= data.targetScore){
 		data.clearStage = true;
@@ -124,23 +126,26 @@ chessObj.prototype.update = function(){
 			} 
 		} 
 	} 
-
-	setTimeout(function(){
-		return (function(){
-			var temp = [];	
-			for(i=0; i<colNum; i++){
-				//if the colomn is empty, merge 
-				if( !isEmpty(chessboard[i]) ){
-					temp.push(chessboard[i]);
-				}
-			} 
-			chessboard = temp;
-			colNum = temp.length; 
-		})()
-	},50);
-	
+	//{1,2} means stars move from column 2 to 1 coz 1 is empty
+	mergeData = {};
+ 	gap = 0;
+	for(i=0; i<colNum; i++){
+		//if the colomn is empty, merge 
+		if( isEmpty(chessboard[i]) ){
+			gap++;
+			if(i<colNum-1 && isEmpty(chessboard[i+1]))
+			{
+				continue;
+			}
+		}
+		else{
+			if(gap>0){
+				mergeData[i] = i-gap;
+			}
+		}
+	}   
 }
-
+ 
 function popStar(disappearSet, p, disabledSet, x, y, starNo){
 	if( starNo==-1 ){
 		return;
@@ -201,7 +206,7 @@ function isValid(x, y){
 		return false; 
 	}
 
-	if( chessboard[x][y]<0 &&  chessboard[x][y]>4){
+	if( chessboard[x][y] == -1){
 		return false;
 	} 
 

@@ -8,6 +8,7 @@ var mx,my; // the position of mouse when click
 var chessboard,tmpChessboard, chess;
 var colNum; // the valid column number 
 var dropData; //record the stars which will be drop 
+var mergeData; //record the stars which will be move horizontially 
 var data; //record the data in the game
 var resetBtn;
 var audio;
@@ -27,8 +28,10 @@ function init(){
 	canvas.addEventListener('click',onMouseClick);
 	resetBtn = document.getElementById('reset');
 	audio = document.createElement('audio');
+	audio.volume =  0.5;
 
-	dropData = {}; 
+	dropData = {};
+	mergeData = {}; 
 	data = new dataObj(); 
 
 	chess = new chessObj();
