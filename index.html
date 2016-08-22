@@ -2,12 +2,21 @@
 <html>
 	<head>
 		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=0.5">
 		<title> PopStar ---- play with your mind </title>
 		<link rel="stylesheet" href="style/css/main.css">
+		<link rel="icon" href="style/img/icon.png">
 	</head>
 	<body>
 		<div class="canvas">
+			<div class="sound">
+				<input type="button" value="+" id="upVol" onclick="controlVol('up')"/>
+				<img src="style/img/sound.png" alt="sound" width='30'>
+				<input type="button" value="-" onclick="controlVol('down')">
+				<span id="nowVol">Vol: 0.5</span>
+			</div>
 			<canvas id='popstar' width="500" height="900">  Your browser doesn't include support for the canvas element. </canvas>
+			<button id="reset"> <img src="style/img/newgame.png" alt="new game" width='155'> </button>
 		</div><!-- 
 		<img src="style/img/bg_main.png" alt="" width="500" height="800"> -->
 		<script src="js/main.js"></script>
@@ -16,5 +25,6 @@
 		<script src="js/starObj.js"></script>
 		<script src="js/chessObj.js"></script>
 		<script src="js/dataObj.js"></script>
+
 	</body>
 </html>

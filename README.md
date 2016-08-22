@@ -1,2 +1,21 @@
 # popstar
 try to make a web pop star game 
+##you can invisit the demo on the website https://wufenfen.github.io/popstar/
+
+游戏规则  
+
+1. 总共5种颜色方块，10*10格
+
+2. 消除2个或2个以上数量相连色块获得积分；
+
+计分规则：
+
+1.常规计分：Score=n*n*5,n表示每次点击消除的相同色块数量；
+
+2.额外奖分：addscore=2000-m*m*20,m表示剩余色块的数量，addscore最小值为0；
+
+3.关卡总得分=score+addscore
+
+过关条件
+
+关卡总得分>=目标分数=1000+(level-1)*3000。

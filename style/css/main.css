@@ -13,5 +13,34 @@ body {
 .canvas {
 	margin: 0 auto;
     width: 500px;
-    height: 800px;
+    height: 1000px;
+	text-align: center;
 }
+ 
+ #reset {
+	background-color: white; 
+    margin-top: 13px; 
+    border: 0;
+ }
+
+ .sound {
+    padding-top: 5px;
+ }
+
+ .sound input[type=button]{
+    vertical-align: top;
+    width: 30px;
+    height: 26px;
+    font-size: 20px;
+    background: #3a6bca;
+    color: white;
+    border: 0;
+    border-radius: 4px;
+    cursor: pointer;
+ }
+
+ #nowVol {
+    vertical-align: top;
+    font-family: cursive;
+    line-height: 26px;
+ }
