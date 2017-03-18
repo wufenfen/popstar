@@ -1,6 +1,12 @@
-# popstar
-try to make a web pop star game 
-##you can invisit the demo on the website https://wufenfen.github.io/popstar/
+# Popstar 消除星星
+
+This is a copycat of the household game —— PopStar
+
+You're welcomed to try the [Demo](https://wufenfen.github.io/popstar/).
+
+If you like it, your star will be appreciated~~~
+
+Here is game rule. Hope you will enjoy!!!
 
 游戏规则  
 
